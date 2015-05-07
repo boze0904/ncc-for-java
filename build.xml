@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<project name="alertdisplay" default="compile" basedir=".">
+	<property name="src.home"       value="src"/>
+	<property name="deploy.home"    value="deploy"/>
+	<property name="release.home"   value="release"/>
+	<property name="javadoc.home"   value="javadoc"/>
+	<property name="lib.home"		value="lib"/>
+
+	<target name="prepare">
+		<mkdir dir="${deploy.home}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${deploy.home}"/>
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.home}"
+			destdir="${deploy.home}" 
+			classpath="${lib.home}/NetExpert.jar;${lib.home}/orbix2000.jar;${lib.home}/omg.jar;${lib.home}/NxCorba.jar;."
+			debug="on"
+			optimize="off"
+			deprecation="on"/>
+	</target>
+
+	<target name="test" depends="prepare">
+		<javac srcdir="test"
+			destdir="${deploy.home}"
+			debug="on"
+			optimize="off"
+			deprecation="on"/>
+	</target>
+
+	<target name="javadoc">
+		<delete dir="${javadoc.home}"/>
+		<mkdir dir="${javadoc.home}"/>
+		<javadoc sourcepath="${src.home}"
+			destdir="${javadoc.home}"
+			packagenames="NxCorba.*"
+			classpath="${lib.home}/NetExpert.jar:${lib.home}/omg.jar:${lib.home}/orbix2000.jar:."
+			author="true"
+			version="true"
+			use="true"
+			charset="Shift_JIS"/>
+	</target>
+
+	<target name="all" depends="clean,prepare,compile"/>
+
+	<target name="dist" depends="compile">
+		<delete dir="${release.home}"/>
+		<mkdir dir="${release.home}"/>
+		<jar jarfile="${release.home}/api.jar"
+			basedir="${deploy.home}"/>
+		<copy todir="${release.home}">
+			<fileset dir="${src.home}/etc" includes="NxCorba.properties"/>
+		</copy>
+	</target>
+
+	<!-- native2ascii -->
+	<target name="label">
+		<exec executable="native2ascii" dir="${src.home}/etc"  output="${src.home}/etc/japanese_label.properties">
+			<arg value="japanese_label.txt"/>
+		</exec>
+		<exec executable="native2ascii" dir="${src.home}/etc"  output="${src.home}/etc/default_label.properties">
+			<arg value="default_label.txt"/>
+		</exec>
+		<copy todir=".">
+			<fileset dir="${src.home}/etc" includes="*.properties"/>
+		</copy>
+	</target>
+
+	<target name="alert">
+		<java classname="jp.co.netsol.ncc.alertdisplay.AlertDisplay"
+			fork="true">
+			<classpath>
+				<pathelement path="deploy;." />
+				<pathelement location="${lib.home}/NetExpert.jar" />
+				<pathelement location="${lib.home}/omg.jar" />
+				<pathelement location="${lib.home}/orbix2000.jar" />
+				<pathelement location="${lib.home}/NxCorba.jar" />
+			</classpath>
+			<sysproperty key="java.compiler" value="NONE" />
+		</java>
+	</target>
+
+	<target name="login">
+		<java classname="jp.co.netsol.ncc.Login"
+			fork="true">
+			<classpath>
+				<pathelement path="deploy;." />
+				<pathelement location="${lib.home}/NetExpert.jar" />
+				<pathelement location="${lib.home}/omg.jar" />
+				<pathelement location="${lib.home}/orbix2000.jar" />
+				<pathelement location="${lib.home}/NxCorba.jar" />
+			</classpath>
+			<sysproperty key="java.compiler" value="NONE" />
+		</java>
+	</target>
+
+	<target name="ncc">
+		<java classname="jp.co.netsol.ncc.ApplicationTitleWindow"
+			fork="true">
+			<classpath>
+				<pathelement path="deploy;." />
+				<pathelement location="${lib.home}/NetExpert.jar" />
+				<pathelement location="${lib.home}/omg.jar" />
+				<pathelement location="${lib.home}/orbix2000.jar" />
+				<pathelement location="${lib.home}/NxCorba.jar" />
+			</classpath>
+			<sysproperty key="java.compiler" value="NONE" />
+		</java>
+	</target>
+
+</project>

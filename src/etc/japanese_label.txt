@@ -1,0 +1,22 @@
+# Label Resource
+# Japanese
+
+# jp.co.netsol.ncc.Login.MenuFile
+jp.co.netsol.ncc.Login.Title			= ログイン
+jp.co.netsol.ncc.Login.UserLabel		= ユーザ名
+jp.co.netsol.ncc.Login.PasswordLabel	= パスワード
+jp.co.netsol.ncc.Login.LoginButton		= ログイン
+jp.co.netsol.ncc.Login.ExitButton		= 閉じる
+jp.co.netsol.ncc.Login.MenuFile			= ファイル(F)
+jp.co.netsol.ncc.Login.MenuExit			= 閉じる(X)
+jp.co.netsol.ncc.Login.ProcessLogin		= ログイン中.....
+jp.co.netsol.ncc.Login.LoginFail		= ログインに失敗しました
+jp.co.netsol.ncc.Login.LangLabel		= 言語
+
+# jp.co.netsol.ncc.NccMenu
+jp.co.netsol.ncc.NccMenu.Title						= メニュー
+jp.co.netsol.ncc.NccMenu.AlertDisplayButton			= アラートディスプレイ
+jp.co.netsol.ncc.NccMenu.EventButton				= イベント
+jp.co.netsol.ncc.NccMenu.MenuFile					= ファイル(F)
+jp.co.netsol.ncc.NccMenu.MenuExit					= 閉じる(X)
+
